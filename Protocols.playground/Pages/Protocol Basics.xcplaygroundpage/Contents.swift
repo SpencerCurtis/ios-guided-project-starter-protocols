@@ -37,15 +37,54 @@ class Starship: FullyNamed {
             return name
         }
     }
-    
+}
+
+extension Starship: Equatable {
+    // All we need to do is compare each side and see if they have the same values or not
+    static func == (lhs: Starship, rhs: Starship) -> Bool {
+        if lhs.fullName == rhs.fullName {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+
+let enterprise = Starship(prefix: "USS", name: "Enterprise")
+enterprise.name = "Lambda"
+
+let serenity = Starship(prefix: nil, name: "Firefly")
+
+
+let fullyNamedThings: [FullyNamed] = [me, enterprise]
+
+for thing in fullyNamedThings {
+    print(thing.fullName)
 }
 //: Protocols can also require that conforming types implement certain methods.
+protocol GeneratesRandomNumbers {
+    // We intentionally don't write the implementation of this function in the protocol. We instead leave it to the adopters of the protocol to create their own implementation.
+    func random() -> Int
+}
 
+class OneThroughTen: GeneratesRandomNumbers {
+    func random() -> Int {
+        return Int.random(in: 1...10)
+    }
+}
 
+let generator = OneThroughTen()
 
+generator.random()
 //: Using built-in Protocols
+if 100 == 100 {
+    print("The numbers are the same")
+}
 
-
+if serenity == enterprise {
+    print("They are the same")
+}
 
 //: ## Protocols as Types
 
